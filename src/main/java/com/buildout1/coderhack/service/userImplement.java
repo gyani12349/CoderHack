@@ -24,14 +24,12 @@ public class userImplement implements userService {
     String username = registerUserDTO.getUsername();
     user user = repository.findByUsername(username);
 
-    // if user exists
     if (user != null) {
       if (user.getStatus() == status.REGISTERED) {
         throw new ResponseStatusException(HttpStatus.CONFLICT);
       } else {
         user.setStatus(status.REGISTERED);
 
-        // save the user with updated data
         repository.save(user);
       }
 
@@ -42,7 +40,6 @@ public class userImplement implements userService {
       newUser.setStatus(status.REGISTERED);
       newUser.setBadges(new HashSet<>());
 
-      // save the user with new data
       repository.save(newUser);
     }
 
@@ -58,13 +55,11 @@ public class userImplement implements userService {
     registeredUser.setBadges(new HashSet<>());
     registeredUser.setScore(0);
 
-    // save the user with updates data
     repository.save(registeredUser);
 
     return true;
   }
-
-  // return all registered user order by score in descending order
+  
   @Override
   public List<user> getAllRegisteredUsers() {
     return repository.findBystatusOrderByScoreDesc(status.REGISTERED);
@@ -96,20 +91,18 @@ public class userImplement implements userService {
     registeredUser.setScore(newScore);
     addBadge(registeredUser, newScore);
 
-    // save the user with updates data
     repository.save(registeredUser);
 
     return true;
   }
 
   private void addBadge(user user, int score) {
-    // add badge according to score
+    
     if (score >= 1 && score < 30) {
       user.getBadges().add(badge.CODE_NINJA);
     } else if (score >= 30 && score < 60) {
       user.getBadges().add(badge.CODE_CHAMP);
     } else {
-      // >= 60 && <= 100
       user.getBadges().add(badge.CODE_MASTER);
     }
   }

@@ -48,14 +48,8 @@ public class userService {
        
     }
 
-    /*
-     * Determines the badge for a user based on their score.
-     *
-     * @param score The score of the user.
-     * 
-     * @return The badge assigned to the user based on their score.
-     */
     
+    //Badge determination method
     public badge setuserbadge(int score) {
         if (score >= 1 && score <= 30) {
             return badge.CODE_NINJA;
